@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <!-- head part of the page-->
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,6 +29,7 @@
     <!-- <link rel="icon" href="favicon.ico"> -->
   </head>
   <!--body part of the page-->
+
   <body>
     <!--skip to main content link-->
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -46,9 +48,70 @@
     </header>
 
     <!-- main content -->
-     <main id="main-content">
-
-     </main>
+    <main id="main-content">
+      <img
+        src="assets/images/tarek-headshot.jpg"
+        alt="A head shot of Tarek Elzoghby in white shirt and a library background"
+        width="460"
+        height="460"
+      />
+      <section aria-labelledby="skills-gap-heading">
+        <h2 id="skills-gap-heading">The Gap Between Three Skills</h2>
+        <p>
+          I started out building interfaces — HTML, CSS, JavaScript. Later I
+          picked up n8n for automation and Python for scripting, mostly to solve
+          my own problems: things I was doing by hand that didn't need to be
+          done by hand.
+        </p>
+        <p>
+          For a while I treated those as separate skills. Then I noticed how
+          small the gap actually was. A site that collects an inquiry and a
+          workflow that routes, checks, or acts on that inquiry aren't two
+          different jobs — they're two or three extra steps on the same one.
+          Most people who want a site built also want what happens after someone
+          submits a form to run without them manually checking an inbox and
+          copying things into a spreadsheet.
+        </p>
+        <p>
+          So I stopped offering them separately. I build the interface and the
+          automation behind it together, from the start, as one feature — not a
+          frontend job with automation tacked on, and not an automation job with
+          a UI bolted to the front.
+        </p>
+      </section>
+      <section aria-labelledby="work-approach-heading">
+        <h2 id="work-approach-heading">How I Actually Work</h2>
+        <p>
+          I don't consider something finished when it looks finished. I go back
+          and try to break it myself before I call it done — and I've been wrong
+          about "done" before.
+        </p>
+        <p>
+          On my own portfolio site, I'd already marked the project finished when
+          I found that pressing Enter in the contact form submitted it directly,
+          skipping the click handler I'd written — the handler had logic in it
+          that the Enter-key submission just walked past. I fixed it. Then,
+          later still, I found a second one: the form had no
+          <code>novalidate</code> attribute, so the browser's own built-in
+          validation was quietly catching a bad email address before my own
+          <code>isEmail()</code> check ever got the chance to run. It looked
+          like my validation was working. It wasn't being reached.
+        </p>
+        <p>
+          Neither bug was visible from the outside. Both were the kind of thing
+          that stays broken indefinitely if nobody goes looking after the fact.
+          That's the habit I bring to anything I build: finished doesn't mean
+          submitted, it means tested against my own attempt to break it.
+        </p>
+      </section>
+      <p>
+        If you want to see that combination — interface and automation, built as
+        one thing — in something real rather than described, the
+        <a href="projects.html">projects</a> page has the actual builds. Or you
+        can just <a href="contact.html">get in touch</a> about what you're
+        trying to build.
+      </p>
+    </main>
 
     <!-- Footer content -->
     <footer>
