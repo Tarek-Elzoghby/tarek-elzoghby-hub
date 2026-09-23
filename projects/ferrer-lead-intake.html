@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <!-- head part of the page-->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Ferrer Window Co. Lead Intake | Tarek Elzoghby — Frontend Developer
+    </title>
+    <meta
+      name="description"
+      content="An n8n workflow for Ferrer Window Co. that filters junk leads, cleans data, and notifies Slack and Sheets — a self-directed practice project by Tarek Elzoghby."
+    />
+    <link
+      rel="canonical"
+      href="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/ferrer-lead-intake.html"
+    />
+
+    <!-- Open Graph (text-only — image still waits on the visual-identity session) -->
+    <meta
+      property="og:title"
+      content="Ferrer Window Co. Lead Intake | Tarek Elzoghby — Frontend Developer"
+    />
+    <meta
+      property="og:description"
+      content="An n8n workflow for Ferrer Window Co. that filters junk leads, cleans data, and notifies Slack and Sheets — a self-directed practice project by Tarek Elzoghby."
+    />
+    <meta
+      property="og:url"
+      content="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/ferrer-lead-intake.html"
+    />
+    <meta property="og:type" content="article" />
+
+    <!--all my accounts links - add more links whenever there is new accounts-->
+    <link rel="me" href="https://github.com/Tarek-Elzoghby" />
+    <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
+    <link rel="me" href="https://hashnode.com/@Tarek-Elzoghby" />
+    <link rel="me" href="https://dev.to/tarek_elzoghby" />
+    <link rel="me" href="https://coderlegion.com/user/Tarek-Elzoghby" />
+    <link
+      rel="me"
+      href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+    />
+
+    <!-- JSON-LD Person structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tarek Elzoghby",
+        "alternateName": "طارق الزغبي",
+        "jobTitle": "Frontend Developer",
+        "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
+        "sameAs": [
+          "https://github.com/Tarek-Elzoghby",
+          "https://www.linkedin.com/in/tarek-elzoghby/",
+          "https://hashnode.com/@Tarek-Elzoghby",
+          "https://dev.to/tarek_elzoghby",
+          "https://coderlegion.com/user/Tarek-Elzoghby",
+          "https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+        ]
+      }
+    </script>
+
+    <!-- <link rel="icon" href="favicon.ico"> -->
+  </head>
+  <body>
+    <!--skip to main content link-->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--the page main heading and the nav -->
+    <header>
+      <h1>Ferrer Window Co. — Lead Intake Automation</h1>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- main content -->
+    <main id="main-content">
+      <a href="../projects.html">← Back to Projects</a>
+
+      <p class="project-label">Self-directed practice project</p>
+
+      <section aria-labelledby="about-project">
+        <h2 id="about-project">What This Automation Does</h2>
+        <p>
+          Ferrer Window Co. needed a way to catch every lead from their
+          website's contact form without anyone having to check for it manually.
+          This n8n workflow receives each form submission, filters out obvious
+          spam (anything missing both a phone number and an email), cleans up
+          the data, then instantly logs the lead to a Google Sheet and posts it
+          to the team's Slack — both at once, so neither one holds up the other.
+        </p>
+        <p>
+          There's no live demo to click through — this runs privately inside the
+          client's own n8n, Slack, and Sheets, not something publicly hostable.
+          What's here instead is the real deliverable: the exported workflow (<a
+            href="https://github.com/Tarek-Elzoghby/lead-intake-notifier"
+            target="_blank"
+            rel="noopener noreferrer"
+            >view the workflow on GitHub</a
+          >) and the plain-English explanation doc written for the business
+          owner, who isn't technical and needed to understand what happens if
+          something breaks.
+        </p>
+      </section>
+
+      <section aria-labelledby="process">
+        <h2 id="process">How I Worked Through This</h2>
+        <p>
+          I built the workflow with n8n's Form Trigger first, even though the
+          final version needed to run on a Webhook — I'd used Webhooks before
+          but not Form Trigger, and this let me see real submission data come
+          through without also wrestling with webhook payload structure at the
+          same time.
+        </p>
+        <p>
+          For the junk-lead filter, my first instinct was to write the logic as
+          "if phone and email are both empty, stop." I inverted it instead to
+          "if phone or email is filled in, continue" — same result, but it makes
+          the true branch the valid-data path, which is the one you actually
+          follow when reading the workflow later.
+        </p>
+        <p>
+          Swapping from Form Trigger to Webhook wasn't a clean drop-in — the
+          Webhook nests every field inside a <code>body</code> key alongside raw
+          request metadata I didn't need, so every downstream reference (the
+          filter, the field mappings) had to be updated to match. That same swap
+          is also why the cleanup step grew: it started as a single job
+          (defaulting an empty message field) and I rebuilt it to also strip out
+          the metadata noise, so Sheets and Slack only ever see the five fields
+          that actually matter.
+        </p>
+        <p>
+          During testing, the Google Sheets connection dropped and needed
+          reconnecting — a small thing, but realistic enough that I wrote it
+          into the troubleshooting section of the client's doc, since it's the
+          kind of issue likely to come up again after handoff.
+        </p>
+      </section>
+
+      <details>
+        <summary>Technical Details</summary>
+        <table>
+            <caption>Tech stack for the Ferrer Window Co. lead intake workflow</caption>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>n8n</td>
+              <td>Workflow platform / automation logic</td>
+            </tr>
+            <tr>
+              <td>Webhook trigger</td>
+              <td>Receives the form submission</td>
+            </tr>
+            <tr>
+              <td>IF node</td>
+              <td>Filters out submissions missing both phone and email</td>
+            </tr>
+            <tr>
+              <td>Set node</td>
+              <td>Strips webhook metadata, defaults empty message field</td>
+            </tr>
+            <tr>
+              <td>Google Sheets API</td>
+              <td>Logs each lead as a permanent record</td>
+            </tr>
+            <tr>
+              <td>Slack API</td>
+              <td>Notifies the team in real time</td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </main>
+    <!-- Footer content -->
+    <footer>
+      <p>&copy; 2026 Tarek Elzoghby</p>
+
+      <nav aria-label="Social media links">
+        <ul>
+          <li>
+            <a
+              href="https://github.com/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/tarek-elzoghby/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://hashnode.com/@Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Hashnode</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://dev.to/tarek_elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >dev.to</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coderlegion.com/user/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CoderLegion</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Frontend Mentor</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>
