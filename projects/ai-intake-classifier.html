@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <!-- head part of the page-->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      AI-Powered Client Intake Classifier | Tarek Elzoghby — Frontend Developer
+    </title>
+    <meta
+      name="description"
+      content="An n8n + Gemini workflow that classifies client intake requests and routes tailored responses. A self-directed practice project."
+    />
+    <link
+      rel="canonical"
+      href="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/ai-intake-classifier.html"
+    />
+    <meta
+      property="og:title"
+      content="AI-Powered Client Intake Classifier | Tarek Elzoghby — Frontend Developer"
+    />
+    <meta
+      property="og:description"
+      content="An n8n + Gemini workflow that classifies client intake requests and routes tailored responses. A self-directed practice project."
+    />
+    <meta
+      property="og:url"
+      content="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/ai-intake-classifier.html"
+    />
+    <meta property="og:type" content="article" />
+
+    <!--all my accounts links - add more links whenever there is new accounts-->
+    <link rel="me" href="https://github.com/Tarek-Elzoghby" />
+    <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
+    <link rel="me" href="https://hashnode.com/@Tarek-Elzoghby" />
+    <link rel="me" href="https://dev.to/tarek_elzoghby" />
+    <link rel="me" href="https://coderlegion.com/user/Tarek-Elzoghby" />
+    <link
+      rel="me"
+      href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+    />
+
+    <!-- JSON-LD Person structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tarek Elzoghby",
+        "alternateName": "طارق الزغبي",
+        "jobTitle": "Frontend Developer",
+        "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
+        "sameAs": [
+          "https://github.com/Tarek-Elzoghby",
+          "https://www.linkedin.com/in/tarek-elzoghby/",
+          "https://hashnode.com/@Tarek-Elzoghby",
+          "https://dev.to/tarek_elzoghby",
+          "https://coderlegion.com/user/Tarek-Elzoghby",
+          "https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+        ]
+      }
+    </script>
+
+    <!-- <link rel="icon" href="favicon.ico"> -->
+  </head>
+
+  <!--body part of the page-->
+  <body>
+    <!--skip to main content link-->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--the page main heading and the nav -->
+    <header>
+      <h1>AI-Powered Client Intake Classifier</h1>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- main content -->
+    <main id="main-content">
+      <a href="../projects.html">← Back to Projects</a>
+
+      <p class="project-label">Self-directed practice project</p>
+
+      <section aria-labelledby="about-project">
+        <h2 id="about-project">What This Workflow Does</h2>
+        <p>
+          A client fills out an intake form describing what they need built. An
+          LLM reads the description, classifies it into one of five categories,
+          states its reasoning, and the workflow routes it — a tailored
+          confirmation email to the client, an internal notification, and a
+          logged row in Google Sheets, all varying by category.
+        </p>
+        <p>
+          There's no live demo — like the Ferrer project, this runs inside its
+          own n8n instance rather than being publicly hostable. The proof here
+          is the workflow itself:
+          <a
+            href="https://github.com/Tarek-Elzoghby/client-intake-classifier"
+            target="_blank"
+            rel="noopener noreferrer"
+            >view the workflow on GitHub</a
+          >.
+        </p>
+      </section>
+
+      <section aria-labelledby="process">
+        <h2 id="process">How I Worked Through This</h2>
+        <p>
+          A plain three-category split wasn't enough once I actually thought
+          about failure cases. A genuinely ambiguous project description and
+          input that isn't a project description at all needed different
+          handling — labeling junk as "ambiguous" would misleadingly imply a
+          real lead worth review. I split those into two categories, then found
+          a second distinction inside failure itself: a classification that
+          fails outright (a network error, a bad API response) is a different
+          signal from one the model genuinely couldn't resolve, so a failed
+          attempt gets its own category — <code>system_error</code> — rather
+          than being folded into ambiguous.
+        </p>
+        <p>
+          A real test case exposed a deeper bug than a wrong label: "route
+          incoming leads smartly based on their details" should have landed on
+          ambiguous, and the model's own reasoning admitted it saw two valid
+          readings and picked one anyway. The evaluation method itself was
+          sequential — forcing a single category before ever checking whether
+          another one also fit. I rebuilt it to independently check all three
+          real categories first, then count how many plausibly fit, before
+          deciding.
+        </p>
+        <p>
+          The classification node started failing with a parse error after I
+          expanded to five categories. I checked the raw model output first
+          rather than assuming my prompt was at fault — the model's answer was
+          fine, but my structured-output schema still had the old three-category
+          list. Fixed that, same error persisted, which sent me digging further:
+          it turned out to be a documented bug in n8n itself, where newer
+          versions route this node's output through logic meant for AI agents.
+          Updating n8n resolved it cleanly.
+        </p>
+        <p>
+          Testing against real inboxes, not just node output, caught a real bug
+          the schema never would have: the ai_workflow branch had its internal
+          notification and client email destinations swapped, sending the
+          internal-only message to the client. That same testing pass led to a
+          structural redesign — Sheets logging didn't actually need to sit
+          downstream of any client email succeeding, so I moved it to connect
+          right after classification instead, decoupling the permanent record
+          from whether a Gmail send happens to work.
+        </p>
+      </section>
+
+      <details>
+        <summary>Technical Details</summary>
+        <table>
+          <caption>
+            Tech stack for the AI-Powered Client Intake Classifier workflow
+          </caption>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>n8n</td>
+              <td>Workflow platform / orchestration</td>
+            </tr>
+            <tr>
+              <td>Form Trigger</td>
+              <td>Receives the client's intake submission</td>
+            </tr>
+            <tr>
+              <td>Google Gemini (LLM Chain)</td>
+              <td>Classifies the description and generates reasoning</td>
+            </tr>
+            <tr>
+              <td>Structured Output Parser</td>
+              <td>
+                Forces a fixed JSON schema (category, reasoning,
+                has_partial_intent)
+              </td>
+            </tr>
+            <tr>
+              <td>Switch node</td>
+              <td>
+                Routes across 6 rules — 5 categories, with
+                ambiguous/system_error converging on shared review logic
+              </td>
+            </tr>
+            <tr>
+              <td>Retry + fallback logic</td>
+              <td>
+                3 attempts, then routes to human review instead of crashing
+              </td>
+            </tr>
+            <tr>
+              <td>Gmail API</td>
+              <td>Category-specific client and internal emails</td>
+            </tr>
+            <tr>
+              <td>Google Sheets API</td>
+              <td>
+                Permanent log of every submission, decoupled from email success
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </main>
+
+    <!-- Footer content -->
+    <footer>
+      <p>&copy; 2026 Tarek Elzoghby</p>
+
+      <nav aria-label="Social media links">
+        <ul>
+          <li>
+            <a
+              href="https://github.com/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/tarek-elzoghby/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://hashnode.com/@Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Hashnode</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://dev.to/tarek_elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >dev.to</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coderlegion.com/user/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CoderLegion</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Frontend Mentor</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>
