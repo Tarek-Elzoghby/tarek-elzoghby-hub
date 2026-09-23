@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <!-- head part of the page-->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My First Portfolio | Tarek Elzoghby — Frontend Developer</title>
+    <meta
+      name="description"
+      content="My first full site: a data-driven project filter, Formspree contact form, and a full accessibility pass. A training project by Tarek Elzoghby."
+    />
+    <link
+      rel="canonical"
+      href="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/frontend-portfolio.html"
+    />
+
+    <!-- Open Graph (text-only — image still waits on the visual-identity session) -->
+    <meta
+      property="og:title"
+      content="My First Portfolio | Tarek Elzoghby — Frontend Developer"
+    />
+    <meta
+      property="og:description"
+      content="My first full site: a data-driven project filter, Formspree contact form, and a full accessibility pass. A training project by Tarek Elzoghby."
+    />
+    <meta
+      property="og:url"
+      content="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/frontend-portfolio.html"
+    />
+    <meta property="og:type" content="article" />
+
+    <!--all my accounts links - add more links whenever there is new accounts-->
+    <link rel="me" href="https://github.com/Tarek-Elzoghby" />
+    <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
+    <link rel="me" href="https://hashnode.com/@Tarek-Elzoghby" />
+    <link rel="me" href="https://dev.to/tarek_elzoghby" />
+    <link rel="me" href="https://coderlegion.com/user/Tarek-Elzoghby" />
+    <link
+      rel="me"
+      href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+    />
+
+    <!-- JSON-LD Person structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tarek Elzoghby",
+        "alternateName": "طارق الزغبي",
+        "jobTitle": "Frontend Developer",
+        "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
+        "sameAs": [
+          "https://github.com/Tarek-Elzoghby",
+          "https://www.linkedin.com/in/tarek-elzoghby/",
+          "https://hashnode.com/@Tarek-Elzoghby",
+          "https://dev.to/tarek_elzoghby",
+          "https://coderlegion.com/user/Tarek-Elzoghby",
+          "https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+        ]
+      }
+    </script>
+
+    <!-- <link rel="icon" href="favicon.ico"> -->
+  </head>
+
+  <!--body part of the page-->
+  <body>
+    <!--skip to main content link-->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--the page main heading and the nav -->
+    <header>
+      <h1>My First Portfolio</h1>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- main content -->
+    <main id="main-content">
+      <a href="../projects.html">← Back to Projects</a>
+
+      <p class="project-label">Training project</p>
+
+      <section aria-labelledby="about-project">
+        <h2 id="about-project">What This Site Is</h2>
+        <p>
+          My first full site, and the project where I actually learned
+          JavaScript by using it — a mobile hamburger nav, client-side form
+          validation, and a project filter that reads each project's category
+          data and builds its own filter buttons automatically.
+        </p>
+        <p>
+          <a
+            href="https://tarek-elzoghby.github.io/frontend-portfolio/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View the live site</a
+          >
+          ·
+          <a
+            href="https://github.com/Tarek-Elzoghby/frontend-portfolio"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View the repo on GitHub</a
+          >
+        </p>
+      </section>
+
+      <section aria-labelledby="process">
+        <h2 id="process">How I Worked Through This</h2>
+        <p>
+          The project filter was built data-driven on purpose: each project card
+          carries its own category tags, and the JavaScript reads whatever
+          categories exist on the page and generates the filter buttons from
+          them. That means adding a new project later means touching one
+          attribute, not the JavaScript itself — a small upfront decision that
+          pays off every time a new project gets added.
+        </p>
+        <p>
+          Two real bugs surfaced after the project was already marked
+          "finished," both the sneaky kind — nothing looked broken until you
+          tried the exact right interaction. The submit handler was listening
+          for a click on the submit button specifically, so pressing Enter in a
+          text field — a completely normal way to submit a form — bypassed
+          validation entirely and reloaded the page, wiping whatever someone had
+          typed. Separately, the form itself was missing
+          <code>novalidate</code>, so the browser's own built-in validation was
+          silently intercepting submission before my JavaScript ever ran — same
+          symptom, a browser message instead of mine, for a completely different
+          reason.
+        </p>
+        <p>
+          Getting the success message to announce correctly for screen reader
+          users took two attempts, not one. The first pass added
+          <code>aria-live="polite"</code> to a success message that was appended
+          to the DOM after submission — and testing with VoiceOver showed it
+          silently failed to announce automatically. The real issue: a live
+          region only reliably announces changes to content already present in
+          the accessibility tree; a brand-new appended element isn't
+          consistently treated as a "change." The fix was a permanent, empty
+          live region present from page load, with JavaScript only ever updating
+          its content, never creating or removing it.
+        </p>
+        <p>
+          A smaller one, caught during the filter's desktop layout: filtered
+          items stopped hiding correctly once the desktop media query kicked in.
+          Traced it to a CSS specificity conflict — a more specific rule inside
+          the media query was quietly overriding the hide rule — and fixed it by
+          adding the same override inside that query, rather than assuming it
+          was a JavaScript problem and debugging the wrong layer.
+        </p>
+      </section>
+
+      <details>
+        <summary>Technical Details</summary>
+        <table>
+            <caption>Tech stack for my first portfolio project</caption>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HTML</td>
+              <td>
+                Semantic structure — articles for project cards, per-field error
+                spans
+              </td>
+            </tr>
+            <tr>
+              <td>CSS</td>
+              <td>Custom properties, mobile-first responsive layout</td>
+            </tr>
+            <tr>
+              <td>Vanilla JavaScript</td>
+              <td>Nav toggle, form validation, data-driven project filter</td>
+            </tr>
+            <tr>
+              <td>Fetch API / async-await</td>
+              <td>
+                Real form submission and success/failure handling via Formspree
+              </td>
+            </tr>
+            <tr>
+              <td>ARIA (aria-live, aria-expanded)</td>
+              <td>
+                Accessible form errors and submission status, verified with
+                VoiceOver
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </main>
+
+    <!-- Footer content -->
+    <footer>
+      <p>&copy; 2026 Tarek Elzoghby</p>
+
+      <nav aria-label="Social media links">
+        <ul>
+          <li>
+            <a
+              href="https://github.com/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/tarek-elzoghby/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://hashnode.com/@Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Hashnode</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://dev.to/tarek_elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >dev.to</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coderlegion.com/user/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CoderLegion</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Frontend Mentor</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>
