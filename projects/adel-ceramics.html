@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <!-- head part of the page-->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adel &amp; Co. Ceramics | Tarek Elzoghby — Frontend Developer</title>
+    <meta
+      name="description"
+      content="A ceramics studio site built end-to-end: warm visual identity, full accessibility pass. A self-directed practice project by Tarek Elzoghby."
+    />
+    <link
+      rel="canonical"
+      href="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/adel-ceramics.html"
+    />
+
+    <!-- Open Graph (text-only — image still waits on the visual-identity session) -->
+    <meta
+      property="og:title"
+      content="Adel &amp; Co. Ceramics | Tarek Elzoghby — Frontend Developer"
+    />
+    <meta
+      property="og:description"
+      content="A ceramics studio site built end-to-end: warm visual identity, full accessibility pass. A self-directed practice project by Tarek Elzoghby."
+    />
+    <meta
+      property="og:url"
+      content="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/adel-ceramics.html"
+    />
+    <meta property="og:type" content="article" />
+
+    <!--all my accounts links - add more links whenever there is new accounts-->
+    <link rel="me" href="https://github.com/Tarek-Elzoghby" />
+    <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
+    <link rel="me" href="https://hashnode.com/@Tarek-Elzoghby" />
+    <link rel="me" href="https://dev.to/tarek_elzoghby" />
+    <link rel="me" href="https://coderlegion.com/user/Tarek-Elzoghby" />
+    <link
+      rel="me"
+      href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+    />
+
+    <!-- JSON-LD Person structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tarek Elzoghby",
+        "alternateName": "طارق الزغبي",
+        "jobTitle": "Frontend Developer",
+        "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
+        "sameAs": [
+          "https://github.com/Tarek-Elzoghby",
+          "https://www.linkedin.com/in/tarek-elzoghby/",
+          "https://hashnode.com/@Tarek-Elzoghby",
+          "https://dev.to/tarek_elzoghby",
+          "https://coderlegion.com/user/Tarek-Elzoghby",
+          "https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+        ]
+      }
+    </script>
+
+    <!-- <link rel="icon" href="favicon.ico"> -->
+  </head>
+
+  <!--body part of the page-->
+  <body>
+    <!--skip to main content link-->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--the page main heading and the nav -->
+    <header>
+      <h1>Adel &amp; Co. Ceramics</h1>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../projects.html">Projects</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- main content -->
+    <main id="main-content">
+      <a href="../projects.html">← Back to Projects</a>
+
+      <p class="project-label">Self-directed practice project</p>
+
+      <section aria-labelledby="about-project">
+        <h2 id="about-project">What This Site Does</h2>
+        <p>
+          A one-page site for a ceramics studio, built from a written client
+          brief to replace a Cairo-based potter's Instagram DMs as the way
+          people commission work. The brief called for something warm and human
+          rather than "a SaaS startup page" — built entirely in vanilla HTML and
+          CSS, no framework, no JavaScript.
+        </p>
+        <p>
+          <a
+            href="https://tarek-elzoghby.github.io/client-brief-01-ceramics-studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View the live site</a
+          >
+          ·
+          <a
+            href="https://github.com/Tarek-Elzoghby/client-brief-01-ceramics-studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View the repo on GitHub</a
+          >
+        </p>
+      </section>
+
+      <section aria-labelledby="process">
+        <h2 id="process">How I Worked Through This</h2>
+        <p>
+          Early on I had to decide where the scroll indicator belonged
+          structurally. It felt like it should live in
+          <code>&lt;header&gt;</code>, but a header is for introducing content,
+          and a scroll cue isn't introducing anything — it's pointing at what's
+          next. The actual answer was that it wasn't its own structural unit at
+          all: it's part of the hero's job, so it lives inside the hero section,
+          right after the tagline.
+        </p>
+        <p>
+          Two bugs slipped through with the same root cause — both "nothing
+          looks broken, nothing happens either." I'd written the scroll arrow as
+          CSS <code>content: '↓'</code>, which only works on
+          <code>::before</code>/<code>::after</code>, not a regular element —
+          fixed by putting the arrow directly in the HTML. Right after that, the
+          anchor link wasn't scrolling anywhere: I'd made the About section a
+          class instead of an id, and fragment links only match ids.
+        </p>
+        <p>
+          Once the site was visually done, I went back through it specifically
+          for accessibility rather than treating a clean look as finished. A
+          Lighthouse audit came back at 99 Performance, 95 Accessibility, 100
+          Best Practices, 91 SEO — strong, but Lighthouse flagged the terracotta
+          contact links for low color contrast (about 3.9:1 against the cream
+          background, under the 4.5:1 AA threshold). Swapping to a darker shade
+          already in the palette fixed it and brought Accessibility up to 100.
+        </p>
+        <p>
+          I also went looking for a gap Lighthouse doesn't actually check:
+          whether the page's landmark regions were useful for a screen reader
+          user, not just present. The real question wasn't "which sections have
+          headings" but "which sections are genuine jump-to destinations" — the
+          hero is where a screen reader lands automatically, so turning it into
+          a landmark would've just cluttered the jump list with a "you are here"
+          entry. About, Gallery, and Contact each got a proper named landmark
+          instead, and I verified the result with NVDA's Elements List rather
+          than just trusting the markup — three named regions, hero correctly
+          absent, no duplicates.
+        </p>
+      </section>
+
+      <details>
+        <summary>Technical Details</summary>
+        <table>
+          <caption>
+            Tech stack for the Adel &amp; Co. Ceramics site
+          </caption>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CSS Grid</td>
+              <td>
+                Responsive gallery layout — auto-fit columns, no manual
+                breakpoints
+              </td>
+            </tr>
+            <tr>
+              <td>CSS custom properties</td>
+              <td>Design tokens for the color palette and typography</td>
+            </tr>
+            <tr>
+              <td>Inline SVG</td>
+              <td>Recolorable contact icons (stroke="currentColor")</td>
+            </tr>
+            <tr>
+              <td>ARIA landmarks</td>
+              <td>Named About/Gallery/Contact regions, verified with NVDA</td>
+            </tr>
+            <tr>
+              <td>Google Fonts</td>
+              <td>Fraunces (display) + Karla (body) pairing</td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </main>
+
+    <!-- Footer content -->
+    <footer>
+      <p>&copy; 2026 Tarek Elzoghby</p>
+
+      <nav aria-label="Social media links">
+        <ul>
+          <li>
+            <a
+              href="https://github.com/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/tarek-elzoghby/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://hashnode.com/@Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Hashnode</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://dev.to/tarek_elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >dev.to</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coderlegion.com/user/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CoderLegion</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Frontend Mentor</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>
