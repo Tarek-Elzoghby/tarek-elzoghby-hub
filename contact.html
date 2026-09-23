@@ -28,7 +28,7 @@
       content="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/contact.html"
     />
     <meta property="og:type" content="website" />
-    
+
     <!--all my accounts links - add more links whenever there is new accounts-->
     <link rel="me" href="https://github.com/Tarek-Elzoghby" />
     <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
@@ -62,4 +62,136 @@
 
     <!-- <link rel="icon" href="favicon.ico"> -->
   </head>
+  <body>
+    <!--skip to main content link-->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--the page main heading and the nav -->
+    <header>
+      <h1>Contact Tarek Elzoghby</h1>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- main content -->
+    <main id="main-content" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Get in touch</h2>
+      <p>
+        Whether you have a freelance project, a job opportunity, or just want to
+        say hi, feel free to reach out using the form below. I look forward to
+        hearing from you!
+      </p>
+
+      <form aria-label="Contact form" action="https://formspree.io/f/xqpzqrqb" method="POST">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <fieldset>
+          <legend>What's this about?</legend>
+          <div>
+            <input
+              type="radio"
+              id="inquiry-freelance"
+              name="inquiry-type"
+              value="freelance"
+              required
+            />
+            <label for="inquiry-freelance">Freelance project</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="inquiry-job"
+              name="inquiry-type"
+              value="job"
+            />
+            <label for="inquiry-job">Job opportunity</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="inquiry-other"
+              name="inquiry-type"
+              value="other"
+            />
+            <label for="inquiry-other">Something else</label>
+          </div>
+        </fieldset>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        <button type="submit">Send</button>
+      </form>
+    </main>
+
+    <!-- Footer content -->
+    <footer>
+      <p>&copy; 2026 Tarek Elzoghby</p>
+
+      <nav aria-label="Social media links">
+        <ul>
+          <li>
+            <a
+              href="https://github.com/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/tarek-elzoghby/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://hashnode.com/@Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Hashnode</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://dev.to/tarek_elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >dev.to</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://coderlegion.com/user/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >CoderLegion</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Frontend Mentor</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
 </html>
