@@ -92,14 +92,10 @@
       <section aria-labelledby="about-project">
         <h2 id="about-project">What This Workflow Does</h2>
         <p>
-          A client fills out an intake form describing what they need built. An
-          LLM reads the description, classifies it into one of five categories,
-          states its reasoning, and the workflow routes it — a tailored
-          confirmation email to the client, an internal notification, and a
-          logged row in Google Sheets, all varying by category.
+          A client fills out an intake form describing what they need built. An LLM reads the description, classifies it into one of five categories, and states its reasoning. The workflow then routes it. Where the category calls for it, the client gets a tailored confirmation email and the team gets an internal notification, and every submission is logged as a row in Google Sheets.
         </p>
         <p>
-          There's no live demo — like the Ferrer project, this runs inside its
+          There's no live demo. Like the Ferrer project, this runs inside its
           own n8n instance rather than being publicly hostable. The proof here
           is the workflow itself:
           <a
@@ -116,21 +112,18 @@
         <p>
           A plain three-category split wasn't enough once I actually thought
           about failure cases. A genuinely ambiguous project description and
-          input that isn't a project description at all needed different
-          handling — labeling junk as "ambiguous" would misleadingly imply a
+          input that isn't a project description at all needed different handling, since labeling junk as "ambiguous" would misleadingly imply a
           real lead worth review. I split those into two categories, then found
           a second distinction inside failure itself: a classification that
           fails outright (a network error, a bad API response) is a different
           signal from one the model genuinely couldn't resolve, so a failed
-          attempt gets its own category — <code>system_error</code> — rather
-          than being folded into ambiguous.
+          attempt gets its own category, <code>system_error</code>, rather than being folded into ambiguous.
         </p>
         <p>
           A real test case exposed a deeper bug than a wrong label: "route
           incoming leads smartly based on their details" should have landed on
           ambiguous, and the model's own reasoning admitted it saw two valid
-          readings and picked one anyway. The evaluation method itself was
-          sequential — forcing a single category before ever checking whether
+          readings and picked one anyway. The evaluation method itself was sequential: it forced a single category before ever checking whether
           another one also fit. I rebuilt it to independently check all three
           real categories first, then count how many plausibly fit, before
           deciding.
@@ -138,19 +131,17 @@
         <p>
           The classification node started failing with a parse error after I
           expanded to five categories. I checked the raw model output first
-          rather than assuming my prompt was at fault — the model's answer was
-          fine, but my structured-output schema still had the old three-category
-          list. Fixed that, same error persisted, which sent me digging further:
+          rather than assuming my prompt was at fault. The model's answer was fine, but my structured-output schema still had the old three-category
+          list. I fixed that, but the same error persisted, which sent me digging further:
           it turned out to be a documented bug in n8n itself, where newer
           versions route this node's output through logic meant for AI agents.
           Updating n8n resolved it cleanly.
         </p>
         <p>
           Testing against real inboxes, not just node output, caught a real bug
-          the schema never would have: the ai_workflow branch had its internal
+          the schema never would have: the <code>ai_workflow</code> branch had its internal
           notification and client email destinations swapped, sending the
-          internal-only message to the client. That same testing pass led to a
-          structural redesign — Sheets logging didn't actually need to sit
+          internal-only message to the client. That same testing pass led to a structural redesign: Sheets logging didn't actually need to sit
           downstream of any client email succeeding, so I moved it to connect
           right after classification instead, decoupling the permanent record
           from whether a Gmail send happens to work.
@@ -192,8 +183,7 @@
             <tr>
               <td>Switch node</td>
               <td>
-                Routes across 6 rules — 5 categories, with
-                ambiguous/system_error converging on shared review logic
+                Routes across 6 rules: the 5 model categories plus <code>system_error</code>, with ambiguous and <code>system_error</code> converging on shared review logic
               </td>
             </tr>
             <tr>

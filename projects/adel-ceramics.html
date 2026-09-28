@@ -95,8 +95,8 @@
           A one-page site for a ceramics studio, built from a written client
           brief to replace a Cairo-based potter's Instagram DMs as the way
           people commission work. The brief called for something warm and human
-          rather than "a SaaS startup page" — built entirely in vanilla HTML and
-          CSS, no framework, no JavaScript.
+          rather than "a SaaS startup page," so it's built entirely in vanilla
+          HTML and CSS, with no framework and no JavaScript.
         </p>
         <p>
           <a
@@ -121,19 +121,19 @@
           Early on I had to decide where the scroll indicator belonged
           structurally. It felt like it should live in
           <code>&lt;header&gt;</code>, but a header is for introducing content,
-          and a scroll cue isn't introducing anything — it's pointing at what's
+          and a scroll cue isn't introducing anything. It's pointing at what's
           next. The actual answer was that it wasn't its own structural unit at
           all: it's part of the hero's job, so it lives inside the hero section,
           right after the tagline.
         </p>
         <p>
-          Two bugs slipped through with the same root cause — both "nothing
-          looks broken, nothing happens either." I'd written the scroll arrow as
-          CSS <code>content: '↓'</code>, which only works on
-          <code>::before</code>/<code>::after</code>, not a regular element —
-          fixed by putting the arrow directly in the HTML. Right after that, the
-          anchor link wasn't scrolling anywhere: I'd made the About section a
-          class instead of an id, and fragment links only match ids.
+          Two quiet bugs slipped through, both the kind where nothing looks
+          broken and nothing happens either. I'd written the scroll arrow as CSS
+          <code>content: '↓'</code>, which only works on
+          <code>::before</code>/<code>::after</code>, not a regular element, so
+          I fixed it by putting the arrow directly in the HTML. Right after
+          that, the anchor link wasn't scrolling anywhere: I'd made the About
+          section a class instead of an id, and fragment links only match ids.
         </p>
         <p>
           Once the site was visually done, I went back through it specifically
@@ -148,12 +148,12 @@
           I also went looking for a gap Lighthouse doesn't actually check:
           whether the page's landmark regions were useful for a screen reader
           user, not just present. The real question wasn't "which sections have
-          headings" but "which sections are genuine jump-to destinations" — the
+          headings" but "which sections are genuine jump-to destinations." The
           hero is where a screen reader lands automatically, so turning it into
           a landmark would've just cluttered the jump list with a "you are here"
           entry. About, Gallery, and Contact each got a proper named landmark
           instead, and I verified the result with NVDA's Elements List rather
-          than just trusting the markup — three named regions, hero correctly
+          than just trusting the markup: three named regions, hero correctly
           absent, no duplicates.
         </p>
       </section>
@@ -174,7 +174,7 @@
             <tr>
               <td>CSS Grid</td>
               <td>
-                Responsive gallery layout — auto-fit columns, no manual
+                Responsive gallery layout with auto-fit columns and no manual
                 breakpoints
               </td>
             </tr>

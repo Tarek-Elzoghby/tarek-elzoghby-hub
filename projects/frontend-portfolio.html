@@ -93,9 +93,9 @@
         <h2 id="about-project">What This Site Is</h2>
         <p>
           My first full site, and the project where I actually learned
-          JavaScript by using it — a mobile hamburger nav, client-side form
-          validation, and a project filter that reads each project's category
-          data and builds its own filter buttons automatically.
+          JavaScript by using it. It has a mobile hamburger nav, client-side
+          form validation, and a project filter that reads each project's
+          category data and builds its own filter buttons automatically.
         </p>
         <p>
           <a
@@ -120,28 +120,28 @@
           The project filter was built data-driven on purpose: each project card
           carries its own category tags, and the JavaScript reads whatever
           categories exist on the page and generates the filter buttons from
-          them. That means adding a new project later means touching one
-          attribute, not the JavaScript itself — a small upfront decision that
-          pays off every time a new project gets added.
+          them. That way, adding a new project later means touching one
+          attribute, not the JavaScript itself. It's a small upfront decision
+          that pays off every time a new project gets added.
         </p>
         <p>
           Two real bugs surfaced after the project was already marked
-          "finished," both the sneaky kind — nothing looked broken until you
+          "finished." Both were the sneaky kind: nothing looked broken until you
           tried the exact right interaction. The submit handler was listening
           for a click on the submit button specifically, so pressing Enter in a
-          text field — a completely normal way to submit a form — bypassed
+          text field (a completely normal way to submit a form) bypassed
           validation entirely and reloaded the page, wiping whatever someone had
           typed. Separately, the form itself was missing
           <code>novalidate</code>, so the browser's own built-in validation was
-          silently intercepting submission before my JavaScript ever ran — same
-          symptom, a browser message instead of mine, for a completely different
-          reason.
+          silently intercepting submission before my JavaScript ever ran. The
+          symptom looked similar, a browser message instead of mine, but the
+          cause was completely different.
         </p>
         <p>
           Getting the success message to announce correctly for screen reader
           users took two attempts, not one. The first pass added
           <code>aria-live="polite"</code> to a success message that was appended
-          to the DOM after submission — and testing with VoiceOver showed it
+          to the DOM after submission, and testing with VoiceOver showed it
           silently failed to announce automatically. The real issue: a live
           region only reliably announces changes to content already present in
           the accessibility tree; a brand-new appended element isn't
@@ -152,17 +152,19 @@
         <p>
           A smaller one, caught during the filter's desktop layout: filtered
           items stopped hiding correctly once the desktop media query kicked in.
-          Traced it to a CSS specificity conflict — a more specific rule inside
-          the media query was quietly overriding the hide rule — and fixed it by
-          adding the same override inside that query, rather than assuming it
-          was a JavaScript problem and debugging the wrong layer.
+          Rather than assuming it was a JavaScript problem and debugging the
+          wrong layer, I traced it to a CSS specificity conflict: a more
+          specific rule inside the media query was quietly overriding the hide
+          rule. I fixed it by adding the same override inside that query.
         </p>
       </section>
 
       <details>
         <summary>Technical Details</summary>
         <table>
-            <caption>Tech stack for my first portfolio project</caption>
+          <caption>
+            Tech stack for my first portfolio project
+          </caption>
           <thead>
             <tr>
               <th>Component</th>
@@ -173,7 +175,7 @@
             <tr>
               <td>HTML</td>
               <td>
-                Semantic structure — articles for project cards, per-field error
+                Semantic structure: articles for project cards, per-field error
                 spans
               </td>
             </tr>

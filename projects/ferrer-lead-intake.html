@@ -9,7 +9,7 @@
     </title>
     <meta
       name="description"
-      content="An n8n workflow for Ferrer Window Co. that filters junk leads, cleans data, and notifies Slack and Sheets — a self-directed practice project by Tarek Elzoghby."
+      content="An n8n workflow for Ferrer Window Co. that filters junk leads, cleans data, and notifies Slack and Sheets. A self-directed practice project by Tarek Elzoghby."
     />
     <link
       rel="canonical"
@@ -23,7 +23,7 @@
     />
     <meta
       property="og:description"
-      content="An n8n workflow for Ferrer Window Co. that filters junk leads, cleans data, and notifies Slack and Sheets — a self-directed practice project by Tarek Elzoghby."
+      content="An n8n workflow for Ferrer Window Co. that filters junk leads, cleans data, and notifies Slack and Sheets. A self-directed practice project by Tarek Elzoghby."
     />
     <meta
       property="og:url"
@@ -96,19 +96,21 @@
           This n8n workflow receives each form submission, filters out obvious
           spam (anything missing both a phone number and an email), cleans up
           the data, then instantly logs the lead to a Google Sheet and posts it
-          to the team's Slack — both at once, so neither one holds up the other.
+          to the team's Slack. Both happen at once, so neither one holds up the
+          other.
         </p>
         <p>
-          There's no live demo to click through — this runs privately inside the
-          client's own n8n, Slack, and Sheets, not something publicly hostable.
-          What's here instead is the real deliverable: the exported workflow (<a
+          There's no live demo to click through. It runs privately inside my own
+          n8n instance, Slack workspace, and Google Sheet, so it isn't publicly
+          hostable. What's here instead is the real deliverable: the exported
+          workflow (<a
             href="https://github.com/Tarek-Elzoghby/lead-intake-notifier"
             target="_blank"
             rel="noopener noreferrer"
             >view the workflow on GitHub</a
           >) and the plain-English explanation doc written for the business
-          owner, who isn't technical and needed to understand what happens if
-          something breaks.
+          owner in the brief, who isn't technical and needed to understand what
+          happens if something breaks.
         </p>
       </section>
 
@@ -116,40 +118,42 @@
         <h2 id="process">How I Worked Through This</h2>
         <p>
           I built the workflow with n8n's Form Trigger first, even though the
-          final version needed to run on a Webhook — I'd used Webhooks before
-          but not Form Trigger, and this let me see real submission data come
-          through without also wrestling with webhook payload structure at the
-          same time.
+          final version needed to run on a Webhook. I'd used Webhooks before but
+          not Form Trigger, and starting there let me see real submission data
+          come through without also wrestling with webhook payload structure at
+          the same time.
         </p>
         <p>
           For the junk-lead filter, my first instinct was to write the logic as
           "if phone and email are both empty, stop." I inverted it instead to
-          "if phone or email is filled in, continue" — same result, but it makes
-          the true branch the valid-data path, which is the one you actually
-          follow when reading the workflow later.
+          "if phone or email is filled in, continue." The result is the same,
+          but it makes the true branch the valid-data path, which is the one you
+          actually follow when reading the workflow later.
         </p>
         <p>
-          Swapping from Form Trigger to Webhook wasn't a clean drop-in — the
-          Webhook nests every field inside a <code>body</code> key alongside raw
-          request metadata I didn't need, so every downstream reference (the
-          filter, the field mappings) had to be updated to match. That same swap
-          is also why the cleanup step grew: it started as a single job
-          (defaulting an empty message field) and I rebuilt it to also strip out
-          the metadata noise, so Sheets and Slack only ever see the five fields
-          that actually matter.
+          Swapping from Form Trigger to Webhook wasn't a clean drop-in. The
+          Webhook nests every field inside a body key alongside raw request
+          metadata I didn't need, so every downstream reference (the filter, the
+          field mappings) had to be updated to match. That same swap is also why
+          the cleanup step grew: it started as a single job (defaulting an empty
+          message field) and I rebuilt it to also strip out the metadata noise,
+          so Sheets and Slack only ever see the five fields that actually
+          matter.
         </p>
         <p>
           During testing, the Google Sheets connection dropped and needed
-          reconnecting — a small thing, but realistic enough that I wrote it
-          into the troubleshooting section of the client's doc, since it's the
-          kind of issue likely to come up again after handoff.
+          reconnecting. It was a small thing, but realistic enough that I wrote
+          it into the troubleshooting section of the client's doc, since it's
+          the kind of issue likely to come up again after handoff.
         </p>
       </section>
 
       <details>
         <summary>Technical Details</summary>
         <table>
-            <caption>Tech stack for the Ferrer Window Co. lead intake workflow</caption>
+          <caption>
+            Tech stack for the Ferrer Window Co. lead intake workflow
+          </caption>
           <thead>
             <tr>
               <th>Component</th>
