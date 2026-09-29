@@ -1,0 +1,91 @@
+/* tokens.css: values only (variables), no rules that style elements.
+   Every page borrows from this file. Rules that use these values live
+   in base.css.
+   Rules that keep later changes cheap:
+   1. Colors are named by ROLE, never by value (dark mode redefines them).
+   2. Layout uses LOGICAL properties everywhere (margin-inline-start, never
+      margin-left), so Arabic/RTL needs no second stylesheet.
+   3. Mobile-first: base styles are the phone layout; two breakpoints only.
+      Custom properties can't be used inside @media, so the values live here
+      as a reference: tablet 40em (640px), desktop 64em (1024px).
+*/
+
+/* ---------- Color: light (default) ---------- */
+:root {
+  color-scheme: light dark;
+
+  --color-bg: #FAFAF8;      /* paper */
+  --color-text: #1B1D1F;    /* ink, 16.2:1 on bg */
+  --color-muted: #5B5B57;   /* secondary/meta text, 6.5:1 */
+  --color-rule: #D8D6D0;    /* hairlines and box borders only, never text */
+  --color-accent: #1F5F5B;  /* only things that do something: links, focus,
+                               the Technical Details marker. 7.1:1 */
+}
+
+/* ---------- Color: dark ---------- */
+/* Follows the system setting unless the visitor forced light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #141617;
+    --color-text: #E9E8E4;    /* 14.8:1 */
+    --color-muted: #A5A49E;   /* 7.3:1 */
+    --color-rule: #33363A;
+    --color-accent: #5FB5AE;  /* lighter teal, 7.5:1 */
+  }
+}
+/* Manual override: needed only if a toggle is added later. Keep in sync
+   with the block above (this duplication is the known cost of a toggle). */
+:root[data-theme="dark"] {
+  --color-bg: #141617;
+  --color-text: #E9E8E4;
+  --color-muted: #A5A49E;
+  --color-rule: #33363A;
+  --color-accent: #5FB5AE;
+}
+
+/* ---------- Type ---------- */
+:root {
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* 1.25 modular scale. h1 scales fluidly between phone and desktop. */
+  --text-body: 1.125rem;                                   /* 18px */
+  --text-small: 0.9rem;
+  --text-h3: 1.375rem;                                     /* ~22px */
+  --text-h2: 1.75rem;                                      /* 28px */
+  --text-h1: clamp(2rem, 1.5rem + 2vw, 2.625rem);          /* 32 to 42px */
+
+  --leading-body: 1.55;
+  --leading-heading: 1.25;
+  --measure: 70ch;          /* max line length */
+}
+
+/* Arabic: its own face, more line height (Arabic script needs the room),
+   never letter-spacing. Code stays left-to-right inside Arabic pages. */
+:lang(ar) {
+  --font-body: "IBM Plex Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
+  --leading-body: 1.75;
+  --leading-heading: 1.4;
+}
+code, pre, .tech-table {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ---------- Spacing (4px base) ---------- */
+:root {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+
+  --page-gutter: var(--space-3);   /* phone */
+}
+@media (min-width: 40em) {
+  :root { --page-gutter: var(--space-4); }
+}
+@media (min-width: 64em) {
+  :root { --page-gutter: var(--space-5); }
+}
