@@ -1,0 +1,46 @@
+/* base.css: rules that style elements using the tokens in tokens.css.
+   Load order in every page: tokens.css first, then base.css. */
+
+/* ---------- Reset ---------- */
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- Page ---------- */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+/* ---------- Links ---------- */
+/* Underline kept by default (color alone is not enough contrast).
+   Individual places, such as nav and footer, can remove it later. */
+a {
+  color: var(--color-accent);
+  text-underline-offset: 0.2em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Visible keyboard focus. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Motion ---------- */
+/* Turns motion off for visitors whose system asks for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
