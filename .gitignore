@@ -4,6 +4,7 @@ node_modules/
 # Build output (per-challenge, before being copied into /docs)
 dist/
 build/
+_site/
 
 
 # Env files
