@@ -17,36 +17,24 @@
     <meta property="og:type" content="website" />
 
     <!--all my accounts links - add more links whenever there is new accounts-->
-    <link rel="me" href="https://github.com/Tarek-Elzoghby" />
-    <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
-    <link rel="me" href="https://hashnode.com/@Tarek-Elzoghby" />
-    <link rel="me" href="https://dev.to/tarek_elzoghby" />
-    <link rel="me" href="https://coderlegion.com/user/Tarek-Elzoghby" />
-    <link rel="me" href="https://codepen.io/Tarek-Elzoghby" />
-    <link
-      rel="me"
-      href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
-    />
+    {% for account in accounts %}
+    <link rel="me" href="{{ account.url }}" />
+    {% endfor %}
 
     <!-- JSON-LD Person structured data -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Tarek Elzoghby",
-        "alternateName": "طارق الزغبي",
-        "jobTitle": "Frontend Developer",
-        "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
-        "sameAs": [
-          "https://github.com/Tarek-Elzoghby",
-          "https://www.linkedin.com/in/tarek-elzoghby/",
-          "https://hashnode.com/@Tarek-Elzoghby",
-          "https://dev.to/tarek_elzoghby",
-          "https://coderlegion.com/user/Tarek-Elzoghby",
-          "https://www.frontendmentor.io/profile/Tarek-Elzoghby",
-          "https://codepen.io/Tarek-Elzoghby"
-        ]
-      }
+          {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Tarek Elzoghby",
+            "alternateName": "طارق الزغبي",
+            "jobTitle": "Frontend Developer",
+            "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
+            "sameAs": [
+      {% for account in accounts %}"{{ account.url }}"{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+            ]
+          }
     </script>
 
     <!-- <link rel="icon" href="favicon.ico"> -->
