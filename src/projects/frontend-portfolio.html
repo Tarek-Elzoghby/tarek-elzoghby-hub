@@ -1,86 +1,15 @@
-<!doctype html>
-<html lang="en">
-  <!-- head part of the page-->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My First Portfolio | Tarek Elzoghby — Frontend Developer</title>
-    <meta
-      name="description"
-      content="My first full site: a data-driven project filter, Formspree contact form, and a full accessibility pass. A training project by Tarek Elzoghby."
-    />
-    <link
-      rel="canonical"
-      href="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/frontend-portfolio.html"
-    />
-
-    <!-- Open Graph (text-only — image still waits on the visual-identity session) -->
-    <meta
-      property="og:title"
-      content="My First Portfolio | Tarek Elzoghby — Frontend Developer"
-    />
-    <meta
-      property="og:description"
-      content="My first full site: a data-driven project filter, Formspree contact form, and a full accessibility pass. A training project by Tarek Elzoghby."
-    />
-    <meta
-      property="og:url"
-      content="https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/frontend-portfolio.html"
-    />
-    <meta property="og:type" content="article" />
-
-    <!--all my accounts links - add more links whenever there is new accounts-->
-    <link rel="me" href="https://github.com/Tarek-Elzoghby" />
-    <link rel="me" href="https://www.linkedin.com/in/tarek-elzoghby/" />
-    <link rel="me" href="https://hashnode.com/@Tarek-Elzoghby" />
-    <link rel="me" href="https://dev.to/tarek_elzoghby" />
-    <link rel="me" href="https://coderlegion.com/user/Tarek-Elzoghby" />
-    <link rel="me" href="https://codepen.io/Tarek-Elzoghby" />
-    <link
-      rel="me"
-      href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
-    />
-
-    <!-- JSON-LD Person structured data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Tarek Elzoghby",
-        "alternateName": "طارق الزغبي",
-        "jobTitle": "Frontend Developer",
-        "url": "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/",
-        "sameAs": [
-          "https://github.com/Tarek-Elzoghby",
-          "https://www.linkedin.com/in/tarek-elzoghby/",
-          "https://hashnode.com/@Tarek-Elzoghby",
-          "https://dev.to/tarek_elzoghby",
-          "https://coderlegion.com/user/Tarek-Elzoghby",
-          "https://www.frontendmentor.io/profile/Tarek-Elzoghby",
-          "https://codepen.io/Tarek-Elzoghby"
-        ]
-      }
-    </script>
-
-    <!-- <link rel="icon" href="favicon.ico"> -->
-  </head>
-
-  <!--body part of the page-->
-  <body>
-    <!--skip to main content link-->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+---
+layout: base.html
+title: "My First Portfolio | Tarek Elzoghby — Frontend Developer"
+description: "My first full site: a data-driven project filter, Formspree contact form, and a full accessibility pass. A training project by Tarek Elzoghby."
+canonical: "https://tarek-elzoghby.github.io/tarek-elzoghby-hub/projects/frontend-portfolio.html"
+ogType: "article"
+---
 
     <!--the page main heading and the nav -->
     <header>
       <h1>My First Portfolio</h1>
-      <nav aria-label="Primary">
-        <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="../about.html">About</a></li>
-          <li><a href="../projects.html">Projects</a></li>
-          <li><a href="../contact.html">Contact</a></li>
-        </ul>
-      </nav>
+      {% include "nav.html" %}
     </header>
 
     <!-- main content -->
@@ -206,61 +135,4 @@
     </main>
 
     <!-- Footer content -->
-    <footer>
-      <p>&copy; 2026 Tarek Elzoghby</p>
-
-      <nav aria-label="Social media links">
-        <ul>
-          <li>
-            <a
-              href="https://github.com/Tarek-Elzoghby"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://www.linkedin.com/in/tarek-elzoghby/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >LinkedIn</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://hashnode.com/@Tarek-Elzoghby"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Hashnode</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://dev.to/tarek_elzoghby"
-              target="_blank"
-              rel="noopener noreferrer"
-              >dev.to</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://coderlegion.com/user/Tarek-Elzoghby"
-              target="_blank"
-              rel="noopener noreferrer"
-              >CoderLegion</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://www.frontendmentor.io/profile/Tarek-Elzoghby"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Frontend Mentor</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </footer>
-  </body>
-</html>
+    {% include "footer.html" %}
