@@ -7,25 +7,13 @@
     <link rel="stylesheet" href="{{ '/assets/css/fonts.css' | url }}" />
     <link rel="stylesheet" href="{{ '/assets/css/base.css' | url }}" />
     <title>{{ title }}</title>
-    <meta
-      name="description"
-      content="{{ description | escape }}"
-    />
-    <link
-      rel="canonical"
-      href="{{ canonical }}"
-    />
+    <meta name="description" content="{{ description | escape }}" />
+    <link rel="canonical" href="{{ canonical }}" />
 
     <!-- Open Graph (text-only — image still waits on the visual-identity session) -->
     <meta property="og:title" content="{{ title | escape }}" />
-    <meta
-      property="og:description"
-      content="{{ description | escape }}"
-    />
-    <meta
-      property="og:url"
-      content="{{ canonical }}"
-    />
+    <meta property="og:description" content="{{ description | escape }}" />
+    <meta property="og:url" content="{{ canonical }}" />
     <meta property="og:type" content="website" />
 
     <!--all my accounts links - add more links whenever there is new accounts-->
@@ -64,6 +52,8 @@
     <!-- <link rel="icon" href="favicon.ico"> -->
   </head>
   <body>
+    <!--skip to main content link-->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     {{ content }}
   </body>
 </html>

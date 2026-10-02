@@ -1,0 +1,10 @@
+<!-- page.url = {{ page.url }} -->
+
+<nav aria-label="Primary">
+    <ul>
+      <li><a href="{{ '/index.html' | url }}"{% if page.url == '/' or page.url == '/index.html' %} aria-current="page"{% endif %}>Home</a></li>
+      <li><a href="{{ '/about.html' | url }}"{% if page.url == '/about.html' %} aria-current="page"{% endif %}>About</a></li>
+      <li><a href="{{ '/projects.html' | url }}"{% if page.url == '/projects.html' %} aria-current="page"{% endif %}>Projects</a></li>
+      <li><a href="{{ '/contact.html' | url }}"{% if page.url == '/contact.html' %} aria-current="page"{% endif %}>Contact</a></li>
+    </ul>
+  </nav>
